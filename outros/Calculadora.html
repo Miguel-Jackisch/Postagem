@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html>
+    <head>
+    <style>
+        .calculadora {
+        width: 300px;
+        margin: 0 auto;
+        padding: 10px;
+        margin-top: 100px;
+        background-color: #c0f4b3;
+        border-radius: 15px;
+        }
+        
+        .respostaReset {
+            display: flex;
+        }
+
+        .display-box {
+        width: 100%;
+        height: 50px;
+        text-align: right;
+        font-size: 20px;
+        border-radius: 15px
+        }
+
+        .botão-row {
+        display: flex;
+        }
+
+        .botão {
+        width: 25%;
+        height: 50px;
+        font-size: 20px;
+        margin: 5px;
+        text-align: center;
+        cursor: pointer;
+        background-color: #6ecd56;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        }
+
+        .botão:hover {
+        background-color: #fabfbf;
+        }
+        
+
+    </style>
+    </head>
+    <body>
+        <div class="calculadora">
+            <div class="respostaReset">
+                <input class="display-box" type="text" id="result" disabled />
+                <div class="botão">C</div>
+            </div>
+            <div class="botão-row">
+                <div class="botão">7</div>
+                <div class="botão">8</div>
+                <div class="botão">9</div>
+                <div class="botão">/</div>
+            </div>
+            <div class="botão-row">
+                <div class="botão">4</div>
+                <div class="botão">5</div>
+                <div class="botão">6</div>
+                <div class="botão">*</div>
+            </div>
+            <div class="botão-row">
+                <div class="botão">1</div>
+                <div class="botão">2</div>
+                <div class="botão">3</div>
+                <div class="botão">-</div>
+            </div>
+            <div class="botão-row">
+                <div class="botão">.</div>
+                <div class="botão">0</div>
+                <div class="botão">=</div>
+                <div class="botão">+</div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        let displayBox = document.querySelector('.display-box');
+        let buttons = document.querySelectorAll('.botão');
+        let operators = ['+', '-', '*', '/'];
+
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                if (button.textContent === '=') {
+                    try {
+                        displayBox.value = eval(displayBox.value);
+                    } catch (e) {
+                        displayBox.value = "Erro";
+                    }
+                } else if (button.textContent === 'C') {
+                    displayBox.value = '';
+                } else if (operators.includes(button.textContent)) {
+                    let lastChar = displayBox.value[displayBox.value.length - 1];
+                    if (!operators.includes(lastChar)) {
+                        displayBox.value += button.textContent;
+                    }
+                } else if (button.textContent === '.') {
+                    let lastNumber = displayBox.value.split(/[\+\-\*\/]/).pop();
+                    if (!lastNumber.includes('.')) {
+                        displayBox.value += button.textContent;
+                    }
+                } else {
+                    displayBox.value += button.textContent;
+                }
+            });
+        });
+    </script>
+</html>

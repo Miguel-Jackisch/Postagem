@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> Cronometro </title>
+        <style>
+            #timer {
+            font-size: 40px;
+            margin-top: 200px;
+            }
+            
+            button {
+            font-size: 20px;
+            margin: 10px;
+            }
+
+            #cronometro{
+                margin: 0 auto;
+                width: 350px;
+                height: 100px;
+                text-align: center;
+                outline: dashed 1px black;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="cronometro">
+            <div id="timer">00:00:00</div>
+            <button onclick="start()">Iniciar</button>
+            <button onclick="pause()">Pausar</button>
+            <button onclick="reset()">Zerar</button>
+        </div>
+
+    </body>
+
+    <script>
+        let time = 0;
+        let interval;
+
+        function start() {
+        interval = setInterval(() => {
+            time++;
+            let hours = Math.floor(time / 3600);
+            let minutes = Math.floor((time % 3600) / 60);
+            let seconds = time % 60;
+            let formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById("timer").innerHTML = formattedTime;
+        }, 1000);
+        }
+
+        function pause() {
+        clearInterval(interval);
+        }
+
+        function reset() {
+        clearInterval(interval);
+        time = 0;
+        document.getElementById("timer").innerHTML = time;
+        }
+    </script>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            color: #333;
+        }
+
+        hr {
+            border: 1px solid #ddd;
+            margin: 10px 0;
+        }
+
+        .post {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+
+        .post small {
+            color: #888;
+        }
+
+        .post h2 {
+            font-size: 20px;
+            margin: 10px 0;
+            color: #333;
+        }
+
+        .post p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .post a button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .post a button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Lista de Posts</h1>
+    <hr>
+
+    <a href="/cad"><button>[ CADASTRAR POSTAGEM ]</button></a>
+
+    {{#each posts}}
+    <div class="post">
+        <small>{{createdAt}}</small>
+        <h2>{{titulo}}</h2>
+        <p>{{conteudo}}</p>
+        <a href="/deletar/{{id}}"><button>[ DELETAR ]</button></a>
+        <a href="/editar/{{id}}"><button>[ EDITAR ]</button></a>
+    </div>
+    {{/each}}
+</body>
+</html>

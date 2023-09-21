@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz com jQuery</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+  
+      .quiz-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+        text-align: center;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+  
+      #options {
+        list-style-type: none;
+        padding: 0;
+      }
+  
+      .option {
+        cursor: pointer;
+        margin: 5px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+  
+      #next-button {
+        margin-top: 10px;
+        padding: 5px 10px;
+        background-color: #007BFF;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+  
+      #score {
+        font-weight: bold;
+        margin-top: 10px;
+      }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Quiz com jQuery</h1>
+        <p id="question">Pergunta aqui...</p>
+        <ul id="options">
+        <li class="option">Opção 1</li>
+        <li class="option">Opção 2</li>
+        <li class="option">Opção 3</li>
+        <li class="option">Opção 4</li>
+        </ul>
+        <button id="next-button">Próxima Pergunta</button>
+        <p id="score">Pontuação: 0</p>
+    </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      const questions = [
+        {
+          question: "Qual é a capital do Brasil?",
+          options: ["Rio de Janeiro", "Brasília", "São Paulo"],
+          answer: 1
+        },
+        {
+          question: "Qual é o maior planeta do sistema solar?",
+          options: ["Terra", "Marte", "Júpiter"],
+          answer: 2
+        },
+        {
+          question: "Qual é a cor do céu em um dia claro?",
+          options: ["Verde", "Azul", "Vermelho"],
+          answer: 1
+        },
+        {
+          question: "Qual esta coreto para: | DOIS ZEROS DOIS QUATRO |",
+          options: ["2024", "0044", "0024", "2024"],
+          answer: 2
+        },
+      ];
+
+      let currentQuestion = 0;
+      let score = 0;
+      let answerSelected = false;
+
+      function displayQuestion() {
+        answerSelected = false;
+        const questionObj = questions[currentQuestion];
+        $("#question").text(questionObj.question);
+        $("#options").empty();
+
+        questionObj.options.forEach(function(option, index) {
+          const li = $("<li>").addClass("option").text(option).attr("data-index", index);
+          $("#options").append(li);
+        });
+      }
+
+      function checkAnswer(selectedIndex) {
+        if (!answerSelected) {
+          answerSelected = true;
+          const questionObj = questions[currentQuestion];
+          if (selectedIndex === questionObj.answer) {
+            score++;
+          }
+          $(".option").prop("disabled", true);
+        }
+      }
+
+      function nextQuestion() {
+        if (currentQuestion < questions.length - 1) {
+          currentQuestion++;
+          $(".option").prop("disabled", false);
+          displayQuestion();
+        } else {
+          $("#question").text("Quiz concluído!");
+          $("#options").empty();
+          $("#next-button").css("display", "none");
+          $("#score").text("Pontuação final: " + score);
+        }
+      }
+
+      $("#options").on("click", ".option", function() {
+        const selectedIndex = $(this).attr("data-index");
+        checkAnswer(parseInt(selectedIndex));
+      });
+
+      $("#next-button").click(function() {
+        if (answerSelected) {
+          nextQuestion();
+        }
+      });
+
+      displayQuestion();
+    });
+  </script>
+</body>
+</html>
